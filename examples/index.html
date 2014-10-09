@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <script src="../lib/jframes/jframes.js"></script>
+  <script src="../src/jfpss.js"></script>
+</head>
+<body>
+  <script>
+void function() {
+  jfpss.startup({
+    onshutdown: function(e) {
+      console.log('onshutdown:' + JSON.stringify(e));
+    },
+    onrecord: function(e) {
+      console.log('onrecord:' + JSON.stringify(e));
+    }
+  });
+}();
+  </script>
+</body>
+</html>

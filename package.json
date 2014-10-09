@@ -1,0 +1,36 @@
+{
+  "name": "jfpss",
+  "title": "jfpss",
+  "description": "FPS JS Library",
+  "version": "0.0.3",
+  "homepage": "https://github.com/zswang/jfpss",
+  "main": "src/jfpss.js",
+  "author": {
+    "name": "zswang",
+    "url": "http://weibo.com/zswang"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zswang/jfpss.git"
+  },
+  "keywords": [
+    "oauth2",
+    "javascript"
+  ],
+  "bugs": {
+    "url": "https://github.com/zswang/jfpss/issues"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "jframes": "*"
+  },
+  "devDependencies": {
+    "uglify-js": "*",
+    "jshint": "*"
+  },
+  "scripts": {
+    "compress": "node build src/jfpss.js dist/jfpss.js && uglifyjs dist/jfpss.js -o dist/jfpss.min.js --source-map dist/jfpss.min.js.map -p 5 -c -m",
+    "lint": "jshint src/*.js *.json"
+  }
+}

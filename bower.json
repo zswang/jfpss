@@ -1,0 +1,29 @@
+{
+  "name": "jfpss",
+  "version": "0.0.3",
+  "homepage": "https://github.com/zswang/jfpss",
+  "authors": [
+    "Zswang <wjhu111@21cn.com>"
+  ],
+  "description": "FPS JS Library",
+  "main": "dist/jfpss.js",
+  "moduleType": [
+    "globals"
+  ],
+  "dependencies": {
+    "jframes": "*"
+  },
+  "keywords": [
+    "jfpss",
+    "javascript"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/components",
+    "test",
+    "tests"
+  ]
+}

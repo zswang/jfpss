@@ -11,7 +11,8 @@
     "globals"
   ],
   "dependencies": {
-    "jframes": "*"
+    "jframes": "*",
+    "jhtmls": "*"
   },
   "keywords": [
     "jfpss",

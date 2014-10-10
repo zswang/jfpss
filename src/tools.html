@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+  <script src="../lib/jhtmls/jhtmls.min.js"></script>
+  <script src="../lib/jframes/jframes.js"></script>
+  <script src="jfpss.js"></script>
+  <style>
+  </style>
+</head>
+<body>
+  <style>
+/*<style>*/
+#jfpss-bar {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  color: #fff;
+}
+#jfpss-bar em {
+  color: #222;
+}
+#jfpss-bar ul {
+  background: green;
+  padding: 0;
+  margin: 0;
+}
+#jfpss-bar li {
+  list-style-type: none;
+  width: 70px;
+  text-align: right;
+  background-image: linear-gradient(to bottom, rgba(50, 50, 80, 0.1), rgba(0, 0, 0, 0.7));
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+/*</style>*/
+  </style>
+  <!--html-->
+  <div id="jfpss-bar"></div>
+  <!--/html-->
+  <script>
+void function() {
+  /*<js>*/
+  var bar = document.getElementById('jfpss-bar');
+  var render = jhtmls.render(function(){/*!
+<ul>
+forEach(function(item) {
+  <li style="background-position: #{70 - parseInt(70 * (Math.min(60, item.fps) / 60))}px 0;"><em>#{item.index}</em> #{item.fps < 10 ? '0' : ''}#{item.fps}</li>
+});
+</ul>
+  */});
+  jfpss.startup({
+    lifespan: -1,
+    recordspan: 1000,
+    maxRecords: 20,
+    onrecord: function(e) {
+      bar.innerHTML = render(e.records);
+    }
+  });
+  /*</js>*/
+}();
+  </script>
+</body>
+</html>

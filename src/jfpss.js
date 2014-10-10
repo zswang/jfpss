@@ -9,16 +9,22 @@ void function (exports) {
   var records; // 帧率记录
 
   var configs; // 配置信息
+  var guid;
 
   /**
-   * 启动帧率记录
+   * 启动帧率检测
+   * @param{Object} options 配置项
+   *  @field{Number} lifespan 最多生命周期，当小于 0 时，则不会自动结束，单位 ms，默认 3000
+   *  @field{Number} recordspan 每次记录的间隔，当小于 0 时，不记录，单位 ms，默认 1000
+   *  @field{Number} maxRecords 最大记录数
    */
   function startup(options) {
     if (running) {
       return;
     }
     configs = {
-      lifespan: 30000,
+      lifespan: 3000,
+      recordspan: 1000,
       maxRecords: 10
     };
     options = options || {};
@@ -30,6 +36,7 @@ void function (exports) {
     starttime = now;
     recordtime = now;
     fps = 0;
+    guid = 0;
     records = [];
     running = jframes.request(function (frame) {
       if (!running) {
@@ -37,10 +44,11 @@ void function (exports) {
       }
       var now = new Date;
       fps++;
-      if (now - recordtime >= 1000) {
+      if (now - recordtime >= configs.recordspan) {
         recordtime = now;
         records.push({
-          fps: fps
+          index: guid++,
+          fps: fps * (1000 / configs.recordspan)
         });
         while (records.length > configs.maxRecords) {
           records.shift();
@@ -53,8 +61,7 @@ void function (exports) {
         }
         fps = 0;
       }
-
-      if (now - starttime <= configs.lifespan) {
+      if (configs.lifespan < 0 || now - starttime <= configs.lifespan) {
         frame.next();
       } else {
         shutdown();
@@ -79,6 +86,9 @@ void function (exports) {
     }
   }
 
+  /**
+   * 终止帧率检测
+   */
   function shutdown() {
     if (!running) {
       return;

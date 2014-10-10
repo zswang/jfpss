@@ -30,7 +30,8 @@
     "jshint": "*"
   },
   "scripts": {
-    "compress": "node build src/jfpss.js dist/jfpss.js && uglifyjs dist/jfpss.js -o dist/jfpss.min.js --source-map dist/jfpss.min.js.map -p 5 -c -m",
+    "dist": "node build src/dist.template.js dist/jfpss.js && uglifyjs dist/jfpss.js -o dist/jfpss.min.js -p 5 -c -m",
+    "tools": "node build src/tools.template.js tools/jfpss.bar.js && uglifyjs tools/jfpss.bar.js -o tools/jfpss.bar.min.js -p 5 -c -m",
     "lint": "jshint src/*.js *.json"
   }
 }

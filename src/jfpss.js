@@ -2,6 +2,11 @@ var jfpss = jfpss || {};
 
 void function (exports) {
 
+  if (typeof jframes === 'undefined') {
+    console.log('jframes is not defined.');
+    return;
+  }
+
   var running; // 是否正在运行
   var starttime; // 开始时间
   var recordtime; // 记录时间
@@ -18,7 +23,7 @@ void function (exports) {
    *  @field{Number} recordspan 每次记录的间隔，当小于 0 时，不记录，单位 ms，默认 1000
    *  @field{Number} maxRecords 最大记录数
    */
-  function startup(options) {
+  var startup = function (options) {
     if (running) {
       return;
     }
@@ -72,7 +77,7 @@ void function (exports) {
   /**
    * 计算中位数
    */
-  function median() {
+  var median = function () {
     if (!records) {
       return;
     }
@@ -89,7 +94,7 @@ void function (exports) {
   /**
    * 终止帧率检测
    */
-  function shutdown() {
+  var shutdown = function () {
     if (!running) {
       return;
     }

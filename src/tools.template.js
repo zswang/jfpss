@@ -4,9 +4,9 @@ void function() {
     return;
   }
 
-  /*<include lib/jframes/src/jframes.js>*/
+  /*<include components/jframes/src/jframes.js>*/
   ;
-  /*<include lib/jhtmls/src/jhtmls.js>*/
+  /*<include components/jhtmls/src/jhtmls.js>*/
   ;
   /*<include src/jfpss.js>*/
 

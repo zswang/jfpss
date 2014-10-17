@@ -37,7 +37,7 @@ void function (exports) {
       configs[key] = options[key];
     }
 
-    var now = new Date;
+    var now = new Date();
     starttime = now;
     recordtime = now;
     fps = 0;
@@ -47,7 +47,7 @@ void function (exports) {
       if (!running) {
         return;
       }
-      var now = new Date;
+      var now = new Date();
       fps++;
       if (now - recordtime >= configs.recordspan) {
         recordtime = now;
@@ -72,7 +72,7 @@ void function (exports) {
         shutdown();
       }
     });
-  }
+  };
 
   /**
    * 计算中位数
@@ -89,7 +89,7 @@ void function (exports) {
     if (temp) {
       return temp.fps;
     }
-  }
+  };
 
   /**
    * 终止帧率检测
@@ -108,7 +108,7 @@ void function (exports) {
     running = null;
     configs = null;
     records = null;
-  }
+  };
 
   exports.startup = startup;
   exports.shutdown = shutdown;

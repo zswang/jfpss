@@ -86,7 +86,7 @@ void function (exports) {
       var y = canvas.height / 2 + rand(0, loaderHeight) - loaderHeight / 2;
       while (i--) {
         particles.push({
-          b: new Date,
+          birthday: new Date(),
           x0: x, // 初始位置
           y0: y,
           x: x, // 当前位置
@@ -103,9 +103,9 @@ void function (exports) {
     };
 
     var updateParticles = function(dur) {
-      var now = new Date;
+      var now = new Date();
       particles = particles.filter(function(particle) {
-        var t = now - particle.b;
+        var t = now - particle.birthday;
         particle.x = particle.x0 + particle.vx * t + 0.5 * particle.ax * t * t;
         particle.y = particle.y0 + particle.vy * t + 0.5 * particle.ay * t * t;
         return particle.y <= canvas.height;

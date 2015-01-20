@@ -337,6 +337,7 @@ void function (exports) {
    *  @field {number} lifespan 最多生命周期，当小于 0 时，则不会自动结束，单位 ms，默认 3000
    *  @field {number} recordspan 每次记录的间隔，当小于 0 时，不记录，单位 ms，默认 1000
    *  @field {number} maxRecords 最大记录数
+   *  @field {number} precision 保留小数位数
    */
   var startup = function (options) {
     if (running) {
@@ -444,19 +445,44 @@ void function (exports) {
       }
     }
   }
-  createStyle("\n#jfpss-bar {\n  position: fixed;\n  left: 10px;\n  top: 10px;\n  z-index: 100000;\n  font-family: Consolas;\n}\n#jfpss-bar em {\n  color: green;\n}\n#jfpss-bar ul {\n  background: green;\n  padding: 0;\n  margin: 0;\n}\n#jfpss-bar li {\n  list-style-type: none;\n  width: 100px;\n  font-size: 12px;\n  height: 16px;\n  line-height: 16px;\n  padding: 0 5px;\n  color: rgb(180, 180, 0);\n  text-align: right;\n  background-image: linear-gradient(to bottom, rgba(50, 50, 80, 0.4), rgba(0, 0, 0, 0.7));\n  background-repeat: no-repeat;\n  background-position: 0 0;\n}\n#jfpss-bar li:first-child {\n  height: 24px;\n  line-height: 26px;\n  font-size: 18px;\n  color: yellow;\n}\n");
+  createStyle("\n#jfpss-bar {\n  position: fixed;\n  left: 10px;\n  top: 10px;\n  z-index: 100000;\n  font-family: monospace;\n  width: 120px;\n  height: 40px;\n  background: rgb(25, 82, 28);\n}\n#jfpss-bar svg {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n}\n#jfpss-bar svg #history-diagram {\n  stroke: lightgreen;\n  fill: green;\n  shape-rendering: crispEdges;\n}\n#jfpss-bar .fps,\n#jfpss-bar .frame {\n  padding: 3px;\n  position: absolute;\n}\n#jfpss-bar .fps {\n  right: 0;\n  top: 0;\n  font-size: 14px;\n  color: yellow;\n}\n#jfpss-bar .frame {\n  left: 0;\n  top: 0;\n  font-size: 12px;\n  color: lightgreen;\n}\n");
   var div = document.createElement('div');
-  div.innerHTML = "\n  <div id=\"jfpss-bar\"></div>\n  ";
+  div.innerHTML = "\n  <div id=\"jfpss-bar\">\n    <svg width=\"120\" height=\"20\" viewBox=\"0 0 120 20\" preserveAspectRatio=\"none\">\n      <path id=\"history-diagram\"></path>\n    </svg>\n    <div class=\"fps\">59.5</div>\n    <div class=\"frame\">12</div>\n  </div>\n  ";
   document.body.appendChild(div);
   var bar = document.getElementById('jfpss-bar');
-  var render = jhtmls.render("\n<ul>\nforEach(function(item) {\n  <li style=\"background-position: #{70 - parseInt(70 * (Math.min(60, item.fps) / 60))}px 0;\"><em>#{item.index}</em> #{item.fps < 10 ? '0' : ''}#{item.fps}</li>\n});\n</ul>\n  ");
+  var diagram = document.getElementById('history-diagram');
+  var fps = document.querySelector('#jfpss-bar .fps');
+  var frame = document.querySelector('#jfpss-bar .frame');
+  var svg = document.querySelector('#jfpss-bar svg');
+  var width = 120;
+  var height = 20;
+  var scripts = document.getElementsByTagName('script');
+  var currScript = scripts[scripts.length - 1];
+  var maxRecords = currScript.getAttribute('data-max-records') || 5;
+  var precision = currScript.getAttribute('data-precision') || 1;
+  var recordspan = currScript.getAttribute('data-recordspan') || 500;
+  var lifespan = currScript.getAttribute('data-lifespan') || -1;
   jfpss.startup({
     lifespan: -1,
-    recordspan: 500,
-    maxRecords: 5,
-    precision: 1,
+    recordspan: recordspan,
+    maxRecords: maxRecords,
+    precision: precision,
     onrecord: function(e) {
-      bar.innerHTML = render(e.records);
+      var records = e.records;
+      fps.textContent = records[0].fps;
+      frame.textContent = records[0].index;
+      var path = [];
+      var segs = records.length;
+      if (!segs) return;
+      var w = Math.round(width / segs * 0.7);
+      var d = Math.round(width / segs * 0.3);
+      records.reverse().forEach(function(record, index) {
+        var fps = record.fps;
+        var x = Math.round(d / 2 + index * width / segs);
+        var h = Math.round(height * fps / 60);
+        path = path.concat(['M', x, height + 1, 'v', -h, 'h', w, 'v', h, 'z']);
+      });
+      diagram.setAttribute('d', path.join(' '));
     }
   });
 }();

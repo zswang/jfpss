@@ -1,8 +1,14 @@
-void function() {
+void
+function() {
   var bar = document.getElementById('jfpss-bar');
   if (bar) {
     return;
   }
+  var jframes = {};
+  var define = function(creator) {
+    jframes = creator(jframes);
+  };
+  define.amd = true;
   void function(exportName) {
   'use strict';
   var exports = exports || {};
@@ -167,7 +173,11 @@ void function() {
     window[exportName] = exports;
   }
 }('jframes');
-  ;
+  var jhtmls = {};
+  define = function(creator) {
+    jhtmls = creator(jhtmls);
+  };
+  define.amd = true;
   void function(exportName) {
   'use strict';
   var exports = exports || {};
@@ -305,13 +315,17 @@ void function() {
     window[exportName] = exports;
   }
 }('jhtmls');
-  ;
-  var jfpss = jfpss || {};
-void function (exports) {
+  var jfpss = {};
+  define = function(creator) {
+    jfpss = creator(jfpss);
+  };
+  define.amd = true;
+  (function(exportName) {
+  'use strict';
   if (typeof jframes === 'undefined') {
-    console.log('jframes is not defined.');
-    return;
+    throw new Error('jframes is not defined.');
   }
+  var exports = exports || {};
   var running; // 是否正在运行
   var starttime; // 开始时间
   var recordtime; // 记录时间
@@ -319,7 +333,7 @@ void function (exports) {
   var records; // 帧率记录
   var configs; // 配置信息
   var guid;
-  var config = function (options) {
+  var config = function(options) {
     configs = configs || {
       lifespan: 3000,
       recordspan: 1000,
@@ -339,7 +353,7 @@ void function (exports) {
    *  @field {number} maxRecords 最大记录数
    *  @field {number} precision 保留小数位数
    */
-  var startup = function (options) {
+  var startup = function(options) {
     if (running) {
       return;
     }
@@ -350,7 +364,7 @@ void function (exports) {
     fps = 0;
     guid = 0;
     records = [];
-    running = jframes.request(function (frame) {
+    running = jframes.request(function(frame) {
       if (!running) {
         return;
       }
@@ -368,14 +382,15 @@ void function (exports) {
         if (configs.onrecord) {
           configs.onrecord({
             records: records.slice(),
-            median: median()
+            median: median
           });
         }
         fps = 0;
       }
       if (configs.lifespan < 0 || now - starttime <= configs.lifespan) {
         frame.next();
-      } else {
+      }
+      else {
         shutdown();
       }
     });
@@ -383,7 +398,7 @@ void function (exports) {
   /**
    * 计算中位数
    */
-  var median = function () {
+  var median = function() {
     if (!records) {
       return;
     }
@@ -399,7 +414,7 @@ void function (exports) {
   /**
    * 终止帧率检测
    */
-  var shutdown = function () {
+  var shutdown = function() {
     if (!running) {
       return;
     }
@@ -417,12 +432,26 @@ void function (exports) {
   exports.config = config;
   exports.startup = startup;
   exports.shutdown = shutdown;
-}(jfpss);
-  var createStyle = function (css) {
+  if (typeof define === 'function') {
+    if (define.amd || define.cmd) {
+      define(function() {
+        return exports;
+      });
+    }
+  }
+  else if (typeof module !== 'undefined' && module.exports) {
+    module.exports = exports;
+  }
+  else {
+    window[exportName] = exports;
+  }
+})('jfpss');
+  function createStyle(css) {
     var style;
     if (document.createStyleSheet) {
       style = document.createStyleSheet();
-    } else {
+    }
+    else {
       style = document.createElement('style');
       document.getElementsByTagName('head')[0].appendChild(style);
     }
@@ -431,29 +460,30 @@ void function (exports) {
     }
     return style;
   }
-  var updateStyle = function (style, css) {
+  function updateStyle(style, css) {
     if (!style) return;
     if (document.createStyleSheet) {
       style.cssText = css;
-    } else {
+    }
+    else {
       var textNode = style.firstChild;
       if (!textNode) {
         textNode = document.createTextNode(css);
         style.appendChild(textNode);
-      } else {
+      }
+      else {
         textNode.nodeValue = css;
       }
     }
   }
-  createStyle("\n#jfpss-bar {\n  position: fixed;\n  left: 10px;\n  top: 10px;\n  z-index: 100000;\n  font-family: monospace;\n  width: 120px;\n  height: 40px;\n  background: rgb(25, 82, 28);\n}\n#jfpss-bar svg {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n}\n#jfpss-bar svg #history-diagram {\n  stroke: lightgreen;\n  fill: green;\n  shape-rendering: crispEdges;\n}\n#jfpss-bar .fps,\n#jfpss-bar .frame {\n  padding: 3px;\n  position: absolute;\n}\n#jfpss-bar .fps {\n  right: 0;\n  top: 0;\n  font-size: 14px;\n  color: yellow;\n}\n#jfpss-bar .frame {\n  left: 0;\n  top: 0;\n  font-size: 12px;\n  color: lightgreen;\n}\n");
+  createStyle( "\n#jfpss-bar {\n  position: fixed;\n  left: 10px;\n  top: 10px;\n  z-index: 100000;\n  font-family: monospace;\n  width: 120px;\n  height: 40px;\n  background: rgb(25, 82, 28);\n}\n#jfpss-bar svg {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n}\n#jfpss-bar svg #history-diagram {\n  stroke: lightgreen;\n  fill: green;\n  shape-rendering: crispEdges;\n}\n#jfpss-bar .fps,\n#jfpss-bar .frame {\n  padding: 3px;\n  position: absolute;\n}\n#jfpss-bar .fps {\n  right: 0;\n  top: 0;\n  font-size: 14px;\n  color: yellow;\n}\n#jfpss-bar .frame {\n  left: 0;\n  top: 0;\n  font-size: 12px;\n  color: lightgreen;\n}\n" );
   var div = document.createElement('div');
-  div.innerHTML = "\n  <div id=\"jfpss-bar\">\n    <svg width=\"120\" height=\"20\" viewBox=\"0 0 120 20\" preserveAspectRatio=\"none\">\n      <path id=\"history-diagram\"></path>\n    </svg>\n    <div class=\"fps\">59.5</div>\n    <div class=\"frame\">12</div>\n  </div>\n  ";
+  div.innerHTML = "\n  <div id=\"jfpss-bar\">\n    <svg width=\"120\" height=\"20\" viewBox=\"0 0 120 20\" preserveAspectRatio=\"none\">\n      <path id=\"history-diagram\"></path>\n    </svg>\n    <div class=\"fps\">59.5</div>\n    <div class=\"frame\">12</div>\n  </div>\n  " ;
   document.body.appendChild(div);
   var bar = document.getElementById('jfpss-bar');
   var diagram = document.getElementById('history-diagram');
   var fps = document.querySelector('#jfpss-bar .fps');
   var frame = document.querySelector('#jfpss-bar .frame');
-  var svg = document.querySelector('#jfpss-bar svg');
   var width = 120;
   var height = 20;
   var scripts = document.getElementsByTagName('script');
@@ -463,10 +493,10 @@ void function (exports) {
   var recordspan = currScript.getAttribute('data-recordspan') || 500;
   var lifespan = currScript.getAttribute('data-lifespan') || -1;
   jfpss.startup({
-    lifespan: -1,
-    recordspan: recordspan,
-    maxRecords: maxRecords,
-    precision: precision,
+    lifespan: +lifespan,
+    recordspan: +recordspan,
+    maxRecords: +maxRecords,
+    precision: +precision,
     onrecord: function(e) {
       var records = e.records;
       fps.textContent = records[0].fps;

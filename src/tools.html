@@ -69,7 +69,6 @@ void function() {
   var diagram = document.getElementById('history-diagram');
   var fps = document.querySelector('#jfpss-bar .fps');
   var frame = document.querySelector('#jfpss-bar .frame');
-  var svg = document.querySelector('#jfpss-bar svg');
   var width = 120;
   var height = 20;
 
@@ -82,10 +81,10 @@ void function() {
   var lifespan = currScript.getAttribute('data-lifespan') || -1;
 
   jfpss.startup({
-    lifespan: -1,
-    recordspan: recordspan,
-    maxRecords: maxRecords,
-    precision: precision,
+    lifespan: +lifespan,
+    recordspan: +recordspan,
+    maxRecords: +maxRecords,
+    precision: +precision,
     onrecord: function(e) {
       var records = e.records;
       fps.textContent = records[0].fps;

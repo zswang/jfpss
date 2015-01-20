@@ -1,9 +1,9 @@
-var jfpss = jfpss || {};
-void function (exports) {
+(function(exportName) {
+  'use strict';
   if (typeof jframes === 'undefined') {
-    console.log('jframes is not defined.');
-    return;
+    throw new Error('jframes is not defined.');
   }
+  var exports = exports || {};
   var running; // 是否正在运行
   var starttime; // 开始时间
   var recordtime; // 记录时间
@@ -11,7 +11,7 @@ void function (exports) {
   var records; // 帧率记录
   var configs; // 配置信息
   var guid;
-  var config = function (options) {
+  var config = function(options) {
     configs = configs || {
       lifespan: 3000,
       recordspan: 1000,
@@ -31,7 +31,7 @@ void function (exports) {
    *  @field {number} maxRecords 最大记录数
    *  @field {number} precision 保留小数位数
    */
-  var startup = function (options) {
+  var startup = function(options) {
     if (running) {
       return;
     }
@@ -42,7 +42,7 @@ void function (exports) {
     fps = 0;
     guid = 0;
     records = [];
-    running = jframes.request(function (frame) {
+    running = jframes.request(function(frame) {
       if (!running) {
         return;
       }
@@ -60,14 +60,15 @@ void function (exports) {
         if (configs.onrecord) {
           configs.onrecord({
             records: records.slice(),
-            median: median()
+            median: median
           });
         }
         fps = 0;
       }
       if (configs.lifespan < 0 || now - starttime <= configs.lifespan) {
         frame.next();
-      } else {
+      }
+      else {
         shutdown();
       }
     });
@@ -75,7 +76,7 @@ void function (exports) {
   /**
    * 计算中位数
    */
-  var median = function () {
+  var median = function() {
     if (!records) {
       return;
     }
@@ -91,7 +92,7 @@ void function (exports) {
   /**
    * 终止帧率检测
    */
-  var shutdown = function () {
+  var shutdown = function() {
     if (!running) {
       return;
     }
@@ -109,4 +110,17 @@ void function (exports) {
   exports.config = config;
   exports.startup = startup;
   exports.shutdown = shutdown;
-}(jfpss);
+  if (typeof define === 'function') {
+    if (define.amd || define.cmd) {
+      define(function() {
+        return exports;
+      });
+    }
+  }
+  else if (typeof module !== 'undefined' && module.exports) {
+    module.exports = exports;
+  }
+  else {
+    window[exportName] = exports;
+  }
+})('jfpss');

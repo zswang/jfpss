@@ -1,20 +1,36 @@
-void function() {
+void
+function() {
   var bar = document.getElementById('jfpss-bar');
   if (bar) {
     return;
   }
-
+  var jframes = {};
+  var define = function(creator) {
+    jframes = creator(jframes);
+  };
+  define.amd = true;
   /*<include file="components/jframes/jframes.js" />*/
-  ;
+
+  var jhtmls = {};
+  define = function(creator) {
+    jhtmls = creator(jhtmls);
+  };
+  define.amd = true;
   /*<include file="components/jhtmls/jhtmls.js" />*/
-  ;
+
+  var jfpss = {};
+  define = function(creator) {
+    jfpss = creator(jfpss);
+  };
+  define.amd = true;
   /*<include file="src/jfpss.js" />*/
 
-  var createStyle = function (css) {
+  function createStyle(css) {
     var style;
     if (document.createStyleSheet) {
       style = document.createStyleSheet();
-    } else {
+    }
+    else {
       style = document.createElement('style');
       document.getElementsByTagName('head')[0].appendChild(style);
     }
@@ -24,25 +40,27 @@ void function() {
     return style;
   }
 
-  var updateStyle = function (style, css) {
+  function updateStyle(style, css) {
     if (!style) return;
     if (document.createStyleSheet) {
       style.cssText = css;
-    } else {
+    }
+    else {
       var textNode = style.firstChild;
       if (!textNode) {
         textNode = document.createTextNode(css);
         style.appendChild(textNode);
-      } else {
+      }
+      else {
         textNode.nodeValue = css;
       }
     }
   }
 
-  createStyle(/*<include file="src/tools.html" block="css" encoding="string" />*/);
+  createStyle( /*<include file="src/tools.html" block="css" encoding="string" />*/ );
 
   var div = document.createElement('div');
-  div.innerHTML = /*<include file="src/tools.html" block="html" encoding="string" />*/;
+  div.innerHTML = /*<include file="src/tools.html" block="html" encoding="string" />*/ ;
   document.body.appendChild(div);
 
   /*<include file="src/tools.html" block="js" />*/

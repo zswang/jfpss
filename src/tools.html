@@ -9,7 +9,7 @@
 </head>
 <body>
   <style>
-/*<style>*/
+/*<css>*/
 #jfpss-bar {
   position: fixed;
   left: 10px;
@@ -44,7 +44,7 @@
   font-size: 18px;
   color: yellow;
 }
-/*</style>
+/*</css>*/
   </style>
   <!--html-->
   <div id="jfpss-bar"></div>
@@ -53,7 +53,7 @@
 void function() {
   /*<js>*/
   var bar = document.getElementById('jfpss-bar');
-  var render = jhtmls.render(function(){/*!
+  var render = jhtmls.render(/*#*/ function() {/*!
 <ul>
 forEach(function(item) {
   <li style="background-position: #{70 - parseInt(70 * (Math.min(60, item.fps) / 60))}px 0;"><em>#{item.index}</em> #{item.fps < 10 ? '0' : ''}#{item.fps}</li>

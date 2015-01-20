@@ -32,10 +32,10 @@ void function (exports) {
 
   /**
    * 启动帧率检测
-   * @param{Object} options 配置项
-   *  @field{Number} lifespan 最多生命周期，当小于 0 时，则不会自动结束，单位 ms，默认 3000
-   *  @field{Number} recordspan 每次记录的间隔，当小于 0 时，不记录，单位 ms，默认 1000
-   *  @field{Number} maxRecords 最大记录数
+   * @param {Object} options 配置项
+   *  @field {number} lifespan 最多生命周期，当小于 0 时，则不会自动结束，单位 ms，默认 3000
+   *  @field {number} recordspan 每次记录的间隔，当小于 0 时，不记录，单位 ms，默认 1000
+   *  @field {number} maxRecords 最大记录数
    */
   var startup = function (options) {
     if (running) {

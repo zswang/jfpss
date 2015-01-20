@@ -16,6 +16,20 @@ void function (exports) {
   var configs; // 配置信息
   var guid;
 
+
+  var config = function (options) {
+    configs = configs || {
+      lifespan: 3000,
+      recordspan: 1000,
+      maxRecords: 10,
+      precision: 0
+    };
+    options = options || {};
+    for (var key in options) {
+      configs[key] = options[key];
+    }
+  };
+
   /**
    * 启动帧率检测
    * @param{Object} options 配置项
@@ -27,15 +41,8 @@ void function (exports) {
     if (running) {
       return;
     }
-    configs = {
-      lifespan: 3000,
-      recordspan: 1000,
-      maxRecords: 10
-    };
-    options = options || {};
-    for (var key in options) {
-      configs[key] = options[key];
-    }
+
+    config(options);
 
     var now = new Date();
     starttime = now;
@@ -50,17 +57,17 @@ void function (exports) {
       var now = new Date();
       fps++;
       if (now - recordtime >= configs.recordspan) {
-        recordtime = now;
         records.push({
           index: guid++,
-          fps: fps * (1000 / configs.recordspan)
+          fps: (fps * (1000 / (now - recordtime))).toFixed(configs.precision)
         });
+        recordtime = now;
         while (records.length > configs.maxRecords) {
           records.shift();
         }
         if (configs.onrecord) {
           configs.onrecord({
-            records: records.slice(),
+            records: records.slice().reverse(),
             median: median()
           });
         }
@@ -110,6 +117,7 @@ void function (exports) {
     records = null;
   };
 
+  exports.config = config;
   exports.startup = startup;
   exports.shutdown = shutdown;
 

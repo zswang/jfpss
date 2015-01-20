@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-  <script src="../components/jhtmls/src/jhtmls.js"></script>
-  <script src="../components/jframes/src/jframes.js"></script>
+  <script src="../components/jhtmls/jhtmls.js"></script>
+  <script src="../components/jframes/jframes.js"></script>
   <script src="jfpss.js"></script>
   <style>
   </style>
@@ -14,11 +14,11 @@
   position: fixed;
   left: 10px;
   top: 10px;
-  color: #fff;
   z-index: 100000;
+  font-family: Consolas;
 }
 #jfpss-bar em {
-  color: #222;
+  color: green;
 }
 #jfpss-bar ul {
   background: green;
@@ -27,13 +27,27 @@
 }
 #jfpss-bar li {
   list-style-type: none;
-  width: 70px;
+  width: 80px;
+  font-size: 12px;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 5px;
+  color: rgb(180, 180, 0);
   text-align: right;
-  background-image: linear-gradient(to bottom, rgba(50, 50, 80, 0.1), rgba(0, 0, 0, 0.7));
+  background-image: linear-gradient(to bottom, rgba(50, 50, 80, 0.4), rgba(0, 0, 0, 0.7));
   background-repeat: no-repeat;
   background-position: 0 0;
 }
-/*</style>*/
+#jfpss-bar li:first-child {
+  height: 20px;
+  line-height: 20px;
+  font-size: 16px;
+  color: yellow;
+}
+#jfpss-bar li:first-child em {
+  color: lightgreen;
+}
+/*</style>
   </style>
   <!--html-->
   <div id="jfpss-bar"></div>

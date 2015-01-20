@@ -4,11 +4,11 @@ void function() {
     return;
   }
 
-  /*<include file="../components/jframes/jframes.js" />*/
+  /*<include file="components/jframes/jframes.js" />*/
   ;
-  /*<include file="../components/jhtmls/jhtmls.js" />*/
+  /*<include file="components/jhtmls/jhtmls.js" />*/
   ;
-  /*<include file="../src/jfpss.js" />*/
+  /*<include file="src/jfpss.js" />*/
 
   var createStyle = function (css) {
     var style;
@@ -39,11 +39,11 @@ void function() {
     }
   }
 
-  createStyle(/*<include file="tools.html" block="css" encoding="string" />*/);
+  createStyle(/*<include file="src/tools.html" block="css" encoding="string" />*/);
 
   var div = document.createElement('div');
-  div.innerHTML = /*<include file="tools.html" block="html" encoding="string" />*/;
+  div.innerHTML = /*<include file="src/tools.html" block="html" encoding="string" />*/;
   document.body.appendChild(div);
 
-  /*<include file="tools.html" block="js" />*/
+  /*<include file="src/tools.html" block="js" />*/
 }();

@@ -1,22 +1,16 @@
 var jfpss = jfpss || {};
-
 void function (exports) {
-
   if (typeof jframes === 'undefined') {
     console.log('jframes is not defined.');
     return;
   }
-
   var running; // 是否正在运行
   var starttime; // 开始时间
   var recordtime; // 记录时间
   var fps; // 帧数
   var records; // 帧率记录
-
   var configs; // 配置信息
   var guid;
-
-
   var config = function (options) {
     configs = configs || {
       lifespan: 3000,
@@ -29,7 +23,6 @@ void function (exports) {
       configs[key] = options[key];
     }
   };
-
   /**
    * 启动帧率检测
    * @param {Object} options 配置项
@@ -42,9 +35,7 @@ void function (exports) {
     if (running) {
       return;
     }
-
     config(options);
-
     var now = new Date();
     starttime = now;
     recordtime = now;
@@ -81,7 +72,6 @@ void function (exports) {
       }
     });
   };
-
   /**
    * 计算中位数
    */
@@ -98,7 +88,6 @@ void function (exports) {
       return temp.fps;
     }
   };
-
   /**
    * 终止帧率检测
    */
@@ -117,9 +106,7 @@ void function (exports) {
     configs = null;
     records = null;
   };
-
   exports.config = config;
   exports.startup = startup;
   exports.shutdown = shutdown;
-
 }(jfpss);

@@ -337,6 +337,7 @@ void function (exports) {
    *  @field {number} lifespan 最多生命周期，当小于 0 时，则不会自动结束，单位 ms，默认 3000
    *  @field {number} recordspan 每次记录的间隔，当小于 0 时，不记录，单位 ms，默认 1000
    *  @field {number} maxRecords 最大记录数
+   *  @field {number} precision 保留小数位数
    */
   var startup = function (options) {
     if (running) {
@@ -450,11 +451,17 @@ void function (exports) {
   document.body.appendChild(div);
   var bar = document.getElementById('jfpss-bar');
   var render = jhtmls.render("\n<ul>\nforEach(function(item) {\n  <li style=\"background-position: #{70 - parseInt(70 * (Math.min(60, item.fps) / 60))}px 0;\"><em>#{item.index}</em> #{item.fps < 10 ? '0' : ''}#{item.fps}</li>\n});\n</ul>\n  ");
+  var scripts = document.getElementsByTagName('script');
+  var currScript = scripts[scripts.length - 1];
+  var maxRecords = currScript.getAttribute('data-max-records') || 5;
+  var precision = currScript.getAttribute('data-precision') || 1;
+  var recordspan = currScript.getAttribute('data-recordspan') || 500;
+  var lifespan = currScript.getAttribute('data-lifespan') || -1;
   jfpss.startup({
     lifespan: -1,
-    recordspan: 500,
-    maxRecords: 5,
-    precision: 1,
+    recordspan: recordspan,
+    maxRecords: maxRecords,
+    precision: precision,
     onrecord: function(e) {
       bar.innerHTML = render(e.records);
     }

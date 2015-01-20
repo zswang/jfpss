@@ -49,7 +49,11 @@
   <!--html-->
   <div id="jfpss-bar"></div>
   <!--/html-->
-  <script>
+  <script
+    data-lifespan="-1"
+    data-max-records="5"
+    data-precision="2"
+    data-recordspan="500">
 void function() {
   /*<js>*/
   var bar = document.getElementById('jfpss-bar');
@@ -60,11 +64,20 @@ forEach(function(item) {
 });
 </ul>
   */});
+
+  var scripts = document.getElementsByTagName('script');
+  var currScript = scripts[scripts.length - 1];
+
+  var maxRecords = currScript.getAttribute('data-max-records') || 5;
+  var precision = currScript.getAttribute('data-precision') || 1;
+  var recordspan = currScript.getAttribute('data-recordspan') || 500;
+  var lifespan = currScript.getAttribute('data-lifespan') || -1;
+
   jfpss.startup({
     lifespan: -1,
-    recordspan: 500,
-    maxRecords: 5,
-    precision: 1,
+    recordspan: recordspan,
+    maxRecords: maxRecords,
+    precision: precision,
     onrecord: function(e) {
       bar.innerHTML = render(e.records);
     }

@@ -31,8 +31,9 @@
     "jshint": "2.5.8"
   },
   "scripts": {
-    "dist": "uglifyjs src/jfpss.js -o dist/jfpss.min.js -p 5 -c -m",
-    "tools": "jdists src/tools.jdists.js -o tools/jfpss.bar.js && uglifyjs tools/jfpss.bar.js -o tools/jfpss.bar.min.js -p 5 -c -m",
-    "lint": "jshint src/*.js *.json"
+    "tools": "jdists tools.jdists.js -o tools/jfpss.bar.js && uglifyjs tools/jfpss.bar.js -o tools/jfpss.bar.min.js -p 5 -c -m",
+
+    "dist": "jdists src/jfpss.js -o jfpss.js && uglifyjs jfpss.js -o jfpss.min.js -p 5 -c -m && npm run tools",
+    "lint": "jshint src/*.js"
   }
 }

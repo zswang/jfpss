@@ -27,7 +27,7 @@
 }
 #jfpss-bar li {
   list-style-type: none;
-  width: 80px;
+  width: 100px;
   font-size: 12px;
   height: 16px;
   line-height: 16px;
@@ -39,13 +39,10 @@
   background-position: 0 0;
 }
 #jfpss-bar li:first-child {
-  height: 20px;
-  line-height: 20px;
-  font-size: 16px;
+  height: 24px;
+  line-height: 26px;
+  font-size: 18px;
   color: yellow;
-}
-#jfpss-bar li:first-child em {
-  color: lightgreen;
 }
 /*</style>
   </style>
@@ -65,8 +62,9 @@ forEach(function(item) {
   */});
   jfpss.startup({
     lifespan: -1,
-    recordspan: 1000,
-    maxRecords: 20,
+    recordspan: 500,
+    maxRecords: 5,
+    precision: 1,
     onrecord: function(e) {
       bar.innerHTML = render(e.records);
     }

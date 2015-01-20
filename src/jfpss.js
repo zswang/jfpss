@@ -57,17 +57,17 @@ void function (exports) {
       var now = new Date();
       fps++;
       if (now - recordtime >= configs.recordspan) {
-        records.push({
+        records.unshift({
           index: guid++,
           fps: (fps * (1000 / (now - recordtime))).toFixed(configs.precision)
         });
         recordtime = now;
         while (records.length > configs.maxRecords) {
-          records.shift();
+          records.pop();
         }
         if (configs.onrecord) {
           configs.onrecord({
-            records: records.slice().reverse(),
+            records: records.slice(),
             median: median()
           });
         }

@@ -113,7 +113,7 @@
     if (configs.onshutdown) {
       configs.onshutdown({
         records: records.slice(),
-        median: median()
+        median: median
       });
     }
     running = null;

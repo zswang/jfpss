@@ -4,12 +4,17 @@ function() {
   if (bar) {
     return;
   }
-  var jframes = {};
-  var define = function(creator) {
-    jframes = creator(jframes);
-  };
-  define.amd = true;
-  /*<include file="components/jframes/jframes.js" />*/
+  var jframes;
+  if (window.jframes) { // 优先使用全局 jframes
+    jframes = window.jframes;
+  } else {
+    jframes = {};
+    var define = function(creator) {
+      jframes = creator(jframes);
+    };
+    define.amd = true;
+    /*<include file="components/jframes/jframes.js" />*/
+  }
 
   var jhtmls = {};
   define = function(creator) {

@@ -4,12 +4,16 @@ function() {
   if (bar) {
     return;
   }
-  var jframes = {};
-  var define = function(creator) {
-    jframes = creator(jframes);
-  };
-  define.amd = true;
-  void function(exportName) {
+  var jframes;
+  if (window.jframes) { // 优先使用全局 jframes
+    jframes = window.jframes;
+  } else {
+    jframes = {};
+    var define = function(creator) {
+      jframes = creator(jframes);
+    };
+    define.amd = true;
+    void function(exportName) {
   'use strict';
   var exports = exports || {};
   // 原生动画帧方法 polyfill
@@ -173,6 +177,7 @@ function() {
     window[exportName] = exports;
   }
 }('jframes');
+  }
   var jhtmls = {};
   define = function(creator) {
     jhtmls = creator(jhtmls);
@@ -422,7 +427,7 @@ function() {
     if (configs.onshutdown) {
       configs.onshutdown({
         records: records.slice(),
-        median: median()
+        median: median
       });
     }
     running = null;

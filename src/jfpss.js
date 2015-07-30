@@ -1,11 +1,24 @@
-(function(exportName) {
-
+(function (exportName) {
+  /*<remove>*/
   'use strict';
+  /*</remove>*/
+
+  /*<jdists encoding="ejs" data="../package.json">*/
+  /**
+   * @file <%- name %>
+   *
+   * <%- description %>
+   * @author
+       <% (author instanceof Array ? author : [author]).forEach(function (item) { %>
+   *   <%- item.name %> (<%- item.url %>)
+       <% }); %>
+   * @version <%- version %>
+   */
+  /*</jdists>*/
 
   if (typeof jframes === 'undefined') {
     throw new Error('jframes is not defined.');
   }
-
 
   var exports = exports || {};
 

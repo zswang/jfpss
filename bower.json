@@ -2,9 +2,14 @@
   "name": "jfpss",
   "version": "0.0.5",
   "homepage": "https://github.com/zswang/jfpss",
-  "authors": [
-    "Zswang <wjhu111@21cn.com>"
-  ],
+  "authors": [{
+    "name": "zswang",
+    "url": "http://weibo.com/zswang"
+  },
+  {
+    "name": "techird",
+    "url": "http://weibo.com/techird"
+  }],
   "description": "FPS JS Library",
   "main": "dist/jfpss.js",
   "moduleType": [

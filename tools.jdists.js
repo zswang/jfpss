@@ -13,7 +13,7 @@ function() {
       jframes = creator(jframes);
     };
     define.amd = true;
-    /*<include file="components/jframes/jframes.js" />*/
+    /*<jdists import="components/jframes/jframes.js" />*/
   }
 
   var jhtmls = {};
@@ -21,14 +21,14 @@ function() {
     jhtmls = creator(jhtmls);
   };
   define.amd = true;
-  /*<include file="components/jhtmls/jhtmls.js" />*/
+  /*<jdists import="components/jhtmls/jhtmls.js" />*/
 
   var jfpss = {};
   define = function(creator) {
     jfpss = creator(jfpss);
   };
   define.amd = true;
-  /*<include file="src/jfpss.js" />*/
+  /*<jdists import="src/jfpss.js" />*/
 
   function createStyle(css) {
     var style;
@@ -62,11 +62,11 @@ function() {
     }
   }
 
-  createStyle( /*<include file="src/tools.html" block="css" encoding="string" />*/ );
+  createStyle( /*<jdists import="src/tools.html?css" encoding="quoted" />*/ );
 
   var div = document.createElement('div');
-  div.innerHTML = /*<include file="src/tools.html" block="html" encoding="string" />*/ ;
+  div.innerHTML = /*<jdists import="src/tools.html?html" encoding="quoted" />*/ ;
   document.body.appendChild(div);
 
-  /*<include file="src/tools.html" block="js" />*/
+  /*<jdists file="src/tools.html?js" />*/
 }();

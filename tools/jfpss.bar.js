@@ -325,8 +325,16 @@ function() {
     jfpss = creator(jfpss);
   };
   define.amd = true;
-  (function(exportName) {
-  'use strict';
+  (function (exportName) {
+  /**
+   * @file jfpss
+   *
+   * FPS JS Library
+   * @author
+   *   zswang (http://weibo.com/zswang)
+   *   techird (http://weibo.com/techird)
+   * @version 0.0.7
+   */
   if (typeof jframes === 'undefined') {
     throw new Error('jframes is not defined.');
   }
@@ -481,43 +489,9 @@ function() {
       }
     }
   }
-  createStyle( "\n#jfpss-bar {\n  position: fixed;\n  left: 10px;\n  top: 10px;\n  z-index: 100000;\n  font-family: monospace;\n  width: 120px;\n  height: 40px;\n  background: rgb(25, 82, 28);\n}\n#jfpss-bar svg {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n}\n#jfpss-bar svg #history-diagram {\n  stroke: lightgreen;\n  fill: green;\n  shape-rendering: crispEdges;\n}\n#jfpss-bar .fps,\n#jfpss-bar .frame {\n  padding: 3px;\n  position: absolute;\n}\n#jfpss-bar .fps {\n  right: 0;\n  top: 0;\n  font-size: 14px;\n  color: yellow;\n}\n#jfpss-bar .frame {\n  left: 0;\n  top: 0;\n  font-size: 12px;\n  color: lightgreen;\n}\n" );
+  createStyle( "#jfpss-bar {\n  position: fixed;\n  left: 10px;\n  top: 10px;\n  z-index: 100000;\n  font-family: monospace;\n  width: 120px;\n  height: 40px;\n  background: rgb(25, 82, 28);\n}\n#jfpss-bar svg {\n  position: absolute;\n  left: 0;\n  bottom: 0;\n}\n#jfpss-bar svg #history-diagram {\n  stroke: lightgreen;\n  fill: green;\n  shape-rendering: crispEdges;\n}\n#jfpss-bar .fps,\n#jfpss-bar .frame {\n  padding: 3px;\n  position: absolute;\n}\n#jfpss-bar .fps {\n  right: 0;\n  top: 0;\n  font-size: 14px;\n  color: yellow;\n}\n#jfpss-bar .frame {\n  left: 0;\n  top: 0;\n  font-size: 12px;\n  color: lightgreen;\n}" );
   var div = document.createElement('div');
-  div.innerHTML = "\n  <div id=\"jfpss-bar\">\n    <svg width=\"120\" height=\"20\" viewBox=\"0 0 120 20\" preserveAspectRatio=\"none\">\n      <path id=\"history-diagram\"></path>\n    </svg>\n    <div class=\"fps\">59.5</div>\n    <div class=\"frame\">12</div>\n  </div>\n  " ;
+  div.innerHTML = "  <div id=\"jfpss-bar\">\n    <svg width=\"120\" height=\"20\" viewBox=\"0 0 120 20\" preserveAspectRatio=\"none\">\n      <path id=\"history-diagram\"></path>\n    </svg>\n    <div class=\"fps\">59.5</div>\n    <div class=\"frame\">12</div>\n  </div>" ;
   document.body.appendChild(div);
-  var bar = document.getElementById('jfpss-bar');
-  var diagram = document.getElementById('history-diagram');
-  var fps = document.querySelector('#jfpss-bar .fps');
-  var frame = document.querySelector('#jfpss-bar .frame');
-  var width = 120;
-  var height = 20;
-  var scripts = document.getElementsByTagName('script');
-  var currScript = scripts[scripts.length - 1];
-  var maxRecords = currScript.getAttribute('data-max-records') || 5;
-  var precision = currScript.getAttribute('data-precision') || 1;
-  var recordspan = currScript.getAttribute('data-recordspan') || 500;
-  var lifespan = currScript.getAttribute('data-lifespan') || -1;
-  jfpss.startup({
-    lifespan: +lifespan,
-    recordspan: +recordspan,
-    maxRecords: +maxRecords,
-    precision: +precision,
-    onrecord: function(e) {
-      var records = e.records;
-      fps.textContent = records[0].fps;
-      frame.textContent = records[0].index;
-      var path = [];
-      var segs = records.length;
-      if (!segs) return;
-      var w = Math.round(width / segs * 0.7);
-      var d = Math.round(width / segs * 0.3);
-      records.reverse().forEach(function(record, index) {
-        var fps = record.fps;
-        var x = Math.round(d / 2 + index * width / segs);
-        var h = Math.round(height * fps / 60);
-        path = path.concat(['M', x, height + 1, 'v', -h, 'h', w, 'v', h, 'z']);
-      });
-      diagram.setAttribute('d', path.join(' '));
-    }
-  });
+  /*<jdists file="src/tools.html?js" />*/
 }();

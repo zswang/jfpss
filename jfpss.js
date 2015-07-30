@@ -1,5 +1,13 @@
-(function(exportName) {
-  'use strict';
+(function (exportName) {
+  /**
+   * @file jfpss
+   *
+   * FPS JS Library
+   * @author
+   *   zswang (http://weibo.com/zswang)
+   *   techird (http://weibo.com/techird)
+   * @version 0.0.7
+   */
   if (typeof jframes === 'undefined') {
     throw new Error('jframes is not defined.');
   }

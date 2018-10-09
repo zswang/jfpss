@@ -2,17 +2,19 @@
   "name": "jfpss",
   "title": "jfpss",
   "description": "FPS JS Library",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://github.com/zswang/jfpss",
   "main": "src/jfpss.js",
-  "author": [{
+  "author": {
     "name": "zswang",
     "url": "http://weibo.com/zswang"
   },
-  {
-    "name": "techird",
-    "url": "http://weibo.com/techird"
-  }],
+  "contributors": [
+    {
+      "name": "techird",
+      "url": "http://weibo.com/techird"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/zswang/jfpss.git"
@@ -30,14 +32,13 @@
     "jframes": "0.0.4"
   },
   "devDependencies": {
-  	"jdists": "0.9.2",
-    "uglify-js": "2.4.15",
-    "jshint": "2.5.8"
+    "jdists": "^2.2.4",
+    "jshint": "^2.9.6",
+    "uglify-js": "^3.4.9"
   },
   "scripts": {
-    "tools": "jdists tools.jdists.js -o tools/jfpss.bar.js && uglifyjs tools/jfpss.bar.js -o tools/jfpss.bar.min.js -p 5 -c -m",
-
-    "dist": "jdists src/jfpss.js -o jfpss.js && uglifyjs jfpss.js -o jfpss.min.js -p 5 -c -m && npm run tools",
+    "tools": "jdists tools.jdists.js -o tools/jfpss.bar.js && uglifyjs tools/jfpss.bar.js -o tools/jfpss.bar.min.js -c -m",
+    "dist": "jdists src/jfpss.js -o jfpss.js && uglifyjs jfpss.js -o jfpss.min.js -c -m && npm run tools",
     "lint": "jshint src/*.js"
   }
 }
